@@ -6,21 +6,25 @@ using System.Threading.Tasks;
 
 namespace SeaBattle
 {
-    internal class PrintField
+    internal static class PrintField
     {
-        public void printField(Player player)
+        public static void printField(Player player)
         {
+            Console.Clear();
+            Console.WriteLine("Sea Battle");
+            Console.WriteLine("Exit - ESC or z");
+            Console.WriteLine();
             Console.WriteLine("Your ships              Opponent ships");
             Console.WriteLine("  a b c d e f g h i j\t  a b c d e f g h i j");
-            for (byte i = 0; i < player.getSizeField(); i++)
+            for (int i = 0; i < player.getSizeField(); i++)
             {
                 Console.Write(i);
                 Console.Write(" ");
-                for (byte j = 0; j < player.getSizeField(); j++)
+                for (int j = 0; j < player.getSizeField(); j++)
                 {
-                    if (player.getField(i, j) == 0)
+                    if (player.getFieldElement(i, j) == 0)
                         Console.Write("_ ");
-                    else if(player.getField(i, j) == 1)
+                    else if(player.getFieldElement(i, j) == 1)
                         Console.Write("O ");
                     else
                         Console.Write("X ");
@@ -28,18 +32,17 @@ namespace SeaBattle
                 Console.Write("\t");
                 Console.Write(i);
                 Console.Write(" ");
-                for (byte j = 0; j < player.getSizeField(); j++)
+                for (int j = 0; j < player.getSizeField(); j++)
                 {
-                    if (player.getAlienField(i, j) == 0)
+                    if (player.getMyMoveElement(i, j) == 0)
                         Console.Write("_ ");
-                    else if (player.getAlienField(i, j) == 1)
+                    else if (player.getMyMoveElement(i, j) == 1)
                         Console.Write("X ");
                     else
                         Console.Write("* ");
                 }
-
                 Console.WriteLine("\n");
-            }
+            }           
         }//end printField
     }//end class PrintField
 }

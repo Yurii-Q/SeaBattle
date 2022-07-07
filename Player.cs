@@ -6,38 +6,45 @@ using System.Threading.Tasks;
 
 namespace SeaBattle
 {
-    internal sealed class Player
+    //public enum StateMyShip { empty = 0, ship = 1, shotShip = 2 };
+    //public enum StateAlienShip { empty = 0, shotShip = 1, miss = 2 };
+    internal class Player
     {
         Random random = new Random();
 
         private const int sizeField = 10;
 
-        private int numberShips = 10;//Maximal number of ship
+        public int numberShips { get; set; } = 10; //Maximal number of ship
 
-        //0("_") - empty, 1("O") - ship, 2("X") - shot ship
-        private byte[,] myField = new byte[sizeField, sizeField];
-        //0("_") - empty, 1("X") - shot ship, 2("*") - miss
-        private byte[,] alienField = new byte[sizeField, sizeField];
+        //0("_") - empty, 1("O") - ship, 2("X") - my ship killed
+        private int[,] myField = new int[sizeField, sizeField];
+        //0("_") - no moved, 1("X") - shot ship, 2("*") - miss
+        private int[,] myMoves = new int[sizeField, sizeField];
+        //History of move
+        //private List<string> history = new List<string>();
 
         public Player()
         {
             zeroingField();
             fillMyField();
-        }
+            numberShips = 10;
+        }       
 
-        public int getSizeField()
-        {
-            return sizeField;
-        }
+        public int getSizeField() { return sizeField; }
 
-        public int getField(int i, int j)
-        {
-            return myField[i, j];
-        }
+        public int getFieldElement(int i, int j) { return myField[i, j]; }
 
-        public int getAlienField(int i, int j)
+        public void setFieldElement(int i, int j, int value) { myField[i, j] = value; }
+
+        public int getMyMoveElement(int i, int j) { return myMoves[i, j]; }
+
+        public void setMyMoveElement(int i, int j, int value) { myMoves[i, j] = value; }
+
+        //Indecsator for alienField because most often there is an appeal to him 
+        public int this[int i, int j]
         {
-            return alienField[i, j];
+            get { return myMoves[i, j]; }
+            set { myMoves[i, j] = value; }
         }
 
         private void zeroingField()
@@ -47,7 +54,7 @@ namespace SeaBattle
                 for (byte j = 0; j < sizeField; j++)
                 {
                     myField[i, j] = 0;
-                    alienField[i, j] = 0;
+                    myMoves[i, j] = 0;
                 }
             }
         }//end zeroingField

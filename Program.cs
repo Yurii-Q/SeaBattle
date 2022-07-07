@@ -5,17 +5,28 @@ using SeaBattle;
 
 Player player = new Player();
 Player pc = new Player();
-PrintField printMyFields = new PrintField();
-InputClass inputClass = new InputClass();   
+
+InputClassPlayer inputClassPlayer = new InputClassPlayer();   
+InputClassPC inputClassPC = new InputClassPC();   
+
+Handler handler = new Handler();
 
 while(true)
 {
-    printMyFields.printField(player);
-    ConsoleKeyInfo inputKey = Console.ReadKey(true);
-    if (inputKey.Key == ConsoleKey.Escape || inputKey.KeyChar == 'z') break;
+    PrintField.printField(player);    
 
-    inputClass.readKey();
+    if(inputClassPlayer.readKeyPlayer(player, handler))break;   
+    inputClassPC.readKeyPC(pc, handler);
 
-    Console.Clear();
+    if (handler.handler(player, pc, inputClassPlayer, inputClassPC) != 0)
+    {
+        PrintField.printField(player);
+
+        if (handler.handler(player, pc, inputClassPlayer, inputClassPC) == 1)            
+            Console.WriteLine("You Win!");
+        else
+            Console.WriteLine("You Lose!");
+        break;
+    }
 }
 
