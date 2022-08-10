@@ -14,7 +14,7 @@ namespace SeaBattle
         public int iPlayer { get; set; } = -1;
         public int jPlayer { get; set; } = -1;
 
-        public int handler(Player player, Player pc, InputClassPlayer icl, InputClassPC icpc)
+        public int handler(Player player, Player pc)
         {
             //Player got to ship of PC
             if (pc.getFieldElement(iPlayer, jPlayer) == 1)

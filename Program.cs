@@ -18,11 +18,11 @@ while(true)
     if(inputClassPlayer.readKeyPlayer(player, handler))break;   
     inputClassPC.readKeyPC(pc, handler);
 
-    if (handler.handler(player, pc, inputClassPlayer, inputClassPC) != 0)
+    if (handler.handler(player, pc) != 0)
     {
         PrintField.printField(player);
 
-        if (handler.handler(player, pc, inputClassPlayer, inputClassPC) == 1)            
+        if (handler.handler(player, pc) == 1)            
             Console.WriteLine("You Win!");
         else
             Console.WriteLine("You Lose!");
